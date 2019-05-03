@@ -1,14 +1,48 @@
 package main
 
-import (
-	"fmt"
-)
+import "math"
 
 func main() {
 
 }
 
+/*
+ListNode
+*/
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
 
+func longestCommonPrefix(strs []string) string {
+
+	if len(strs) == 0 {
+		return ""
+	}
+	if len(strs) == 1 {
+		return strs[0]
+	}
+	var minLength = math.MaxInt32
+	for Index := 1; Index < len(strs); Index++ {
+		var tmpStr = strs[Index]
+		var min = len(strs[0])
+		if min > len(tmpStr) {
+			min = len(tmpStr)
+		}
+		var cnt = 0
+		for strLen := 0; strLen < min; strLen++ {
+			if strs[0][strLen:strLen+1] == strs[Index][strLen:strLen+1] {
+				cnt++
+			} else {
+				break
+			}
+		}
+		if minLength > cnt {
+			minLength = cnt
+		}
+	}
+	return strs[0][0:minLength]
+}
 
 //Reverse string reverse
 func Reverse(s string) string {

@@ -12,6 +12,35 @@ type ListNode struct {
 	Next *ListNode
 }
 
+func isValid(s string) bool {
+
+	var pairMap = map[string]string{
+		")": "(",
+		"]": "[",
+		"}": "{",
+	}
+
+	var stack = make([]string, 0)
+	for index := 0; index < len(s); index++ {
+		var wk = s[index : index+1]
+		switch wk {
+		case "(", "[", "{":
+			stack = append(stack, wk)
+		case ")", "]", "}":
+			if len(stack) <= 0 {
+				return false
+			}
+			var wkP = stack[len(stack)-1]
+			if pairMap[wk] == wkP {
+				stack = stack[:len(stack)-1]
+			} else {
+				return false
+			}
+		}
+	}
+	return len(stack) == 0
+}
+
 //Reverse string reverse
 func Reverse(s string) string {
 	runes := []rune(s)

@@ -1,5 +1,10 @@
 package main
 
+import (
+	"math"
+	"sort"
+)
+
 func main() {
 
 }
@@ -10,6 +15,37 @@ ListNode
 type ListNode struct {
 	Val  int
 	Next *ListNode
+}
+
+func merge(nums1 []int, m int, nums2 []int, n int) {
+	var i1, i2 = m - 1, n - 1
+	var index = m + n - 1
+	for i1 >= 0 || i2 >= 0 {
+		var wk1 = math.MinInt32
+		if i1 >= 0 {
+			wk1 = nums1[i1]
+		}
+		var wk2 = math.MinInt32
+		if i2 >= 0 {
+			wk2 = nums2[i2]
+		}
+		if wk1 >= wk2 {
+			nums1[index] = wk1
+			i1--
+		} else {
+			nums1[index] = wk2
+			i2--
+		}
+		index--
+	}
+
+}
+
+func mergeUsingSort(nums1 []int, m int, nums2 []int, n int) {
+	for index := 0; index < n; index++ {
+		nums1[m+index] = nums2[index]
+	}
+	sort.Sort(sort.IntSlice(nums1))
 }
 
 //Reverse string reverse

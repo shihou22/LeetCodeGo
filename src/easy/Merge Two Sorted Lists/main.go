@@ -1,5 +1,7 @@
 package main
 
+import "sort"
+
 func main() {
 
 }
@@ -10,6 +12,49 @@ ListNode
 type ListNode struct {
 	Val  int
 	Next *ListNode
+}
+
+func mergeTwoListsRecursion(l1 *ListNode, l2 *ListNode) *ListNode {
+
+	if l1 == nil {
+		return l2
+	}
+	if l2 == nil {
+		return l1
+	}
+	if l1.Val < l2.Val {
+		l1.Next = mergeTwoLists(l1.Next, l2)
+		return l1
+	} else {
+		l2.Next = mergeTwoLists(l1, l2.Next)
+		return l2
+	}
+}
+
+func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
+
+	var array = make([]int, 0)
+	for l1 != nil || l2 != nil {
+		if l1 != nil {
+			array = append(array, l1.Val)
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			array = append(array, l2.Val)
+			l2 = l2.Next
+		}
+	}
+	sort.Sort(sort.IntSlice(array))
+
+	var res = ListNode{0, nil}
+	var wk *ListNode
+	wk = &res
+	for index := 0; index < len(array); index++ {
+		var tmp = ListNode{array[index], nil}
+		wk.Next = &tmp
+		wk = wk.Next
+	}
+	return res.Next
 }
 
 //Reverse string reverse
