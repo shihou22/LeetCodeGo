@@ -1,27 +1,31 @@
 package main
 
+import "sort"
+
 func main() {
 
 }
 
-func hammingWeight(num uint32) int {
-	var res = 0
-	for index := 0; index < 32; index++ {
-		res += int(num & 1)
-		num >>= 1
-	}
-	return res
+func majorityElement(nums []int) int {
+	sort.Sort(sort.IntSlice(nums))
+	return nums[len(nums)/2]
 }
 
-func hammingWeightOther(num uint32) int {
-	var res = 0
-	for index := 0; index < 32; index++ {
-		if (num & 1) == 1 {
-			res++
-		}
-		num = num >> 1
-	}
-	return res
+/*
+TreeNode
+*/
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+/*
+ListNode
+*/
+type ListNode struct {
+	Val  int
+	Next *ListNode
 }
 
 //Reverse string reverse

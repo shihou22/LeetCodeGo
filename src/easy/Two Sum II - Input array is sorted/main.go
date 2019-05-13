@@ -1,27 +1,45 @@
 package main
 
+import "math"
+
 func main() {
 
 }
-
-func hammingWeight(num uint32) int {
-	var res = 0
-	for index := 0; index < 32; index++ {
-		res += int(num & 1)
-		num >>= 1
+func twoSum(numbers []int, target int) []int {
+	if numbers == nil || len(numbers) <= 1 {
+		return nil
 	}
-	return res
+	var wk = make(map[int]int)
+	for index := 0; index < len(numbers); index++ {
+		wk[numbers[index]] = index + 1
+	}
+
+	for index := 0; index < len(numbers); index++ {
+		var base = int(math.Abs(float64(target - numbers[index])))
+		var val, ok = wk[base]
+		if ok {
+			return []int{index + 1, val}
+		}
+	}
+
+	return nil
 }
 
-func hammingWeightOther(num uint32) int {
-	var res = 0
-	for index := 0; index < 32; index++ {
-		if (num & 1) == 1 {
-			res++
-		}
-		num = num >> 1
-	}
-	return res
+/*
+TreeNode
+*/
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+/*
+ListNode
+*/
+type ListNode struct {
+	Val  int
+	Next *ListNode
 }
 
 //Reverse string reverse

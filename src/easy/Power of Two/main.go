@@ -3,20 +3,45 @@ package main
 func main() {
 
 }
-
 func isPowerOfTwo(n int) bool {
+	if n == 0 {
+		return false
+	}
+	if n == 1 {
+		return true
+	}
+	if n%2 == 0 {
+		return isPowerOfTwo(n / 2)
+	}
+	return false
+}
+func isPowerOfTwoOther(n int) bool {
 
 	if n == 1 {
 		return true
 	}
-
-	//this argument is Integer. so Number of digits are 32.
+	var res = 1
 	for index := 1; index <= 32; index++ {
-		if n == (1 << uint(index)) {
+		if n == res {
 			return true
+		}
+		res <<= 1
+		if n < res {
+			return false
 		}
 	}
 	return false
+	// if n == 1 {
+	// 	return true
+	// }
+
+	// //this argument is Integer. so Number of digits are 32.
+	// for index := 1; index <= 32; index++ {
+	// 	if n == (1 << uint(index)) {
+	// 		return true
+	// 	}
+	// }
+	// return false
 }
 
 //Reverse string reverse

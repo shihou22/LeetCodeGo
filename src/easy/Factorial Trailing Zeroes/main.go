@@ -4,24 +4,76 @@ func main() {
 
 }
 
-func hammingWeight(num uint32) int {
-	var res = 0
-	for index := 0; index < 32; index++ {
-		res += int(num & 1)
-		num >>= 1
+func trailingZeroes(n int) int {
+	var five = 0
+	for {
+		if n/5 < 1 {
+			return five
+		} else {
+			five += n / 5
+			n /= 5
+		}
 	}
-	return res
 }
 
-func hammingWeightOther(num uint32) int {
-	var res = 0
-	for index := 0; index < 32; index++ {
-		if (num & 1) == 1 {
-			res++
+func trailingZeroesBrute(n int) int {
+
+	var wk = make(map[int]int)
+
+	for index := 1; index <= n; index++ {
+		var target = index
+		for inner := 2; inner <= n; {
+			if target%inner == 0 {
+				wk[inner]++
+				target /= inner
+			} else {
+				inner++
+			}
 		}
-		num = num >> 1
 	}
-	return res
+	var val, ok = wk[5]
+	if ok {
+		return val
+	} else {
+		return 0
+	}
+}
+
+func trailingZeroesOther(n int) int {
+
+	var res int64
+	res = 1
+	for index := 1; index <= n; index++ {
+		res *= int64(index)
+	}
+
+	var sum = 0
+	remainder := int64(0)
+	for remainder == 0 {
+		remainder = res % 10
+		if remainder == 0 {
+			sum++
+		}
+		res /= 10
+	}
+	return sum
+}
+
+/*
+TreeNode
+*/
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+/*
+ListNode
+*/
+type ListNode struct {
+	Val  int
+	Next *ListNode
 }
 
 //Reverse string reverse

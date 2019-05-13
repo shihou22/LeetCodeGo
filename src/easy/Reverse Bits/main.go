@@ -5,6 +5,16 @@ func main() {
 }
 func reverseBits(num uint32) uint32 {
 	var res uint32
+	for index := 0; index < 32; index++ {
+		res <<= 1
+		res += num & 1
+		num >>= 1
+	}
+	return res
+}
+
+func reverseBitsOther(num uint32) uint32 {
+	var res uint32
 	for Index := 0; Index < 32; Index++ {
 		res = res << 1
 		res += num & 1

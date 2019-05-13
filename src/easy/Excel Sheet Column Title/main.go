@@ -3,25 +3,35 @@ package main
 func main() {
 
 }
+func convertToTitle(n int) string {
 
-func hammingWeight(num uint32) int {
-	var res = 0
-	for index := 0; index < 32; index++ {
-		res += int(num & 1)
-		num >>= 1
+	const alphabet = 26
+	var res string
+	for n > 0 {
+		n--
+		var wk = n % 26
+		res = string(wk+65) + res
+		n /= 26
 	}
+
 	return res
 }
 
-func hammingWeightOther(num uint32) int {
-	var res = 0
-	for index := 0; index < 32; index++ {
-		if (num & 1) == 1 {
-			res++
-		}
-		num = num >> 1
-	}
-	return res
+/*
+TreeNode
+*/
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+/*
+ListNode
+*/
+type ListNode struct {
+	Val  int
+	Next *ListNode
 }
 
 //Reverse string reverse
