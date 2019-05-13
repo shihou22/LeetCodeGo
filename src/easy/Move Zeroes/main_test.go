@@ -38,7 +38,7 @@ func Test_moveZeroesOther(t *testing.T) {
 	}
 }
 
-func Test_moveZeroesOther2(t *testing.T) {
+func Test_moveZeroesBruteForce(t *testing.T) {
 	type args struct {
 		nums []int
 	}
@@ -50,7 +50,7 @@ func Test_moveZeroesOther2(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			moveZeroesOther2(tt.args.nums)
+			moveZeroesBruteForce(tt.args.nums)
 		})
 	}
 }

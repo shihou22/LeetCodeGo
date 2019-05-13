@@ -8,6 +8,23 @@ func isPowerOfFour(num int) bool {
 	if num == 1 {
 		return true
 	}
+	if num < 4 || num%4 != 0 {
+		return false
+	}
+
+	for num != 0 {
+		if num%4 != 0 && num != 1 {
+			return false
+		}
+		num >>= 2
+	}
+	return true
+}
+
+func isPowerOfFourOther(num int) bool {
+	if num == 1 {
+		return true
+	}
 	if num < 4 {
 		return false
 	}

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -9,17 +8,37 @@ func main() {
 
 }
 
-func hoge(a int) {
-	bts := []byte(strconv.Itoa(10))
-	fmt.Println(bts)
+func compress(chars []byte) int {
+	// for outer, val := range chars {
+	for outer := 0; outer < len(chars); outer++ {
+		var cnt = 0
+		for index := outer; index < len(chars); index++ {
+			// if val != chars[index] {
+			if chars[outer] != chars[index] {
+				break
+			}
+			cnt++
+		}
+		if cnt > 1 {
+			var b = []byte(strconv.Itoa(cnt))
+			chars = append(chars[:outer+1], chars[outer+cnt:]...)
+			for _, innerV := range b {
+				chars = append(chars, 0)
+				copy(chars[outer+1:], chars[outer:])
+				chars[outer+1] = innerV
+				outer++
+			}
+		}
+	}
+	return len(chars)
 }
 
-func compress(chars []byte) int {
+func compressOther(chars []byte) int {
 
 	for index := 0; index < len(chars); index++ {
 		var c = chars[index]
 		var cnt = 0
-		for j := index + 1; j < len(chars); j++ {
+		for j := index; j < len(chars); j++ {
 			if c != chars[j] {
 				break
 			}

@@ -5,8 +5,31 @@ import "fmt"
 func main() {
 
 }
+func moveZeroes(nums []int) {
+	var left = 0
+	var right = 0
+	for {
 
-func moveZeroesOther2(nums []int) {
+		for left < len(nums) && nums[left] != 0 {
+			left++
+		}
+
+		right = left + 1
+		for right < len(nums) && nums[right] == 0 {
+			right++
+		}
+
+		if right >= len(nums) || left >= len(nums) {
+			return
+		}
+		nums[left], nums[right] = nums[right], nums[left]
+
+		left++
+	}
+
+}
+
+func moveZeroesOtherMemory(nums []int) {
 
 	var zero = 0
 	for _, val := range nums {
@@ -45,10 +68,9 @@ func moveZeroesOther(nums []int) {
 			nums[start], nums[end] = nums[end], nums[start]
 		}
 	}
-	fmt.Println("hoge")
 }
 
-func moveZeroes(nums []int) {
+func moveZeroesBruteForce(nums []int) {
 
 	for index, element := range nums {
 
