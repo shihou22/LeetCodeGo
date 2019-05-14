@@ -4,6 +4,52 @@ func main() {
 
 }
 
+func levelOrderBottom(root *TreeNode) [][]int {
+
+	if root == nil {
+		return nil
+	}
+
+	var box = make(map[int][]int)
+	levelOrderBottomRecursive(root, box, 0)
+
+	var res = make([][]int, 0)
+	var max = -1
+	for index := 0; index < len(box); index++ {
+		var tmp = make([]int, 0)
+		res = append(res, tmp)
+		max++
+	}
+
+	for key, val := range box {
+		res[max-key] = val
+	}
+
+	return res
+}
+
+func levelOrderBottomRecursive(root *TreeNode, box map[int][]int, current int) {
+	if root == nil {
+		return
+	}
+
+	var res, ok = box[current]
+	if ok {
+		res = append(res, root.Val)
+		box[current] = res
+	} else {
+		var tmp = make([]int, 0)
+		tmp = append(tmp, root.Val)
+		box[current] = tmp
+	}
+	if root.Left != nil {
+		levelOrderBottomRecursive(root.Left, box, current+1)
+	}
+	if root.Right != nil {
+		levelOrderBottomRecursive(root.Right, box, current+1)
+	}
+}
+
 /*
 TreeNode
 */
@@ -12,7 +58,6 @@ type TreeNode struct {
 	Left  *TreeNode
 	Right *TreeNode
 }
-
 
 /*
 ListNode
