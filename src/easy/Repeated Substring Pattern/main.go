@@ -6,6 +6,27 @@ func main() {
 
 }
 
+func repeatedSubstringPractice(s string) bool {
+
+	var sLen = len(s)
+	if sLen <= 1 {
+		return false
+	}
+
+	for index := len(s) / 2; index > 0; index-- {
+		var wk = s[0:index]
+		var wkRes string
+		for inner := 0; inner < len(s)/index; inner++ {
+			wkRes += wk
+		}
+		if wkRes == s {
+			return true
+		}
+	}
+
+	return false
+}
+
 func repeatedSubstringPatternOther(s string) bool {
 
 	var sLen = len(s)
