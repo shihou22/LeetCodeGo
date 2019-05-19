@@ -3,16 +3,46 @@ package main
 func main() {
 
 }
-func hasPathSum(root *TreeNode, sum int) bool {
-	if root == nil {
-		return false
+
+func getRow(rowIndex int) []int {
+
+	var res = make([]int, 0)
+	res = append(res, 1)
+	for index := 0; index < rowIndex; index++ {
+		for inner := index + 1; inner > 0; inner-- {
+
+			if inner == index+1 {
+				res = append(res, 1)
+			} else {
+				res[inner] = res[inner] + res[inner-1]
+			}
+		}
 	}
-	if sum-root.Val == 0 && root.Left == nil && root.Right == nil {
-		return true
+	return res
+}
+
+func getRowFirst(rowIndex int) []int {
+
+	var res = make([][]int, 0)
+
+	for index := 0; index <= rowIndex; index++ {
+		var temp = make([]int, 0)
+		temp = append(temp, 1)
+		res = append(res, temp)
 	}
-	var left = hasPathSum(root.Left, sum-root.Val)
-	var right = hasPathSum(root.Right, sum-root.Val)
-	return left || right
+	for index := 1; index <= rowIndex; index++ {
+		var prev = res[index-1]
+		var temp = res[index]
+		for inner := 1; inner < index+1; inner++ {
+			if inner == index {
+				temp = append(temp, 1)
+			} else {
+				temp = append(temp, prev[inner]+prev[inner-1])
+			}
+		}
+		res[index] = temp
+	}
+	return res[rowIndex]
 }
 
 /*
