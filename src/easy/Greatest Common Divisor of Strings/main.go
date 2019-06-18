@@ -4,36 +4,35 @@ func main() {
 
 }
 
-func pathSum(root *TreeNode, sum int) int {
+func gcdOfStrings(str1 string, str2 string) string {
+	strLen := getGCD(len(str1), len(str2))
+	strBase := str2[:strLen]
 
-	if root == nil {
-		return 0
-	}
-	memo := make([]int, 0)
-	return pathSumHelper(root, sum, memo)
-}
-
-func pathSumHelper(root *TreeNode, sum int, memo []int) int {
-
-	if root == nil {
-		return 0
-	}
-	memo = append(memo, root.Val)
-	val0 := 0
-	total := 0
-	for index := len(memo) - 1; index >= 0; index-- {
-		total += memo[index]
-		if total == sum {
-			val0++
-			/*
-				doesn't brek because in some case val is 0 or minus
-			*/
+	for index := 0; index < len(str1)/strLen || index < len(str2)/strLen; index += strLen {
+		if index < len(str1)/strLen && strBase != str1[index:index+strLen] {
+			return ""
+		}
+		if index < len(str2)/strLen && strBase != str2[index:index+strLen] {
+			return ""
 		}
 	}
+	return strBase
+}
 
-	val1 := pathSumHelper(root.Left, sum, memo)
-	val2 := pathSumHelper(root.Right, sum, memo)
-	return val0 + val1 + val2
+func getGCD(s1, s2 int) int {
+	wk1 := s1
+	wk2 := s2
+	if s1 < s2 {
+		wk1 = s2
+		wk2 = s1
+	}
+	amari := wk1 % wk2
+	for amari != 0 {
+		wk1 = wk2
+		wk2 = amari
+		amari = wk1 % wk2
+	}
+	return wk2
 }
 
 /*

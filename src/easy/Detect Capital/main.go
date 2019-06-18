@@ -1,39 +1,30 @@
 package main
 
+import (
+	"unicode"
+)
+
 func main() {
 
 }
 
-func pathSum(root *TreeNode, sum int) int {
+func detectCapitalUse(word string) bool {
 
-	if root == nil {
-		return 0
-	}
-	memo := make([]int, 0)
-	return pathSumHelper(root, sum, memo)
-}
-
-func pathSumHelper(root *TreeNode, sum int, memo []int) int {
-
-	if root == nil {
-		return 0
-	}
-	memo = append(memo, root.Val)
-	val0 := 0
-	total := 0
-	for index := len(memo) - 1; index >= 0; index-- {
-		total += memo[index]
-		if total == sum {
-			val0++
-			/*
-				doesn't brek because in some case val is 0 or minus
-			*/
+	cnt := 0
+	first := false
+	for index, val := range word {
+		isUpper := unicode.IsUpper(val)
+		if index == 0 && isUpper {
+			first = true
+		}
+		if isUpper {
+			cnt++
 		}
 	}
-
-	val1 := pathSumHelper(root.Left, sum, memo)
-	val2 := pathSumHelper(root.Right, sum, memo)
-	return val0 + val1 + val2
+	if cnt == 0 || first && cnt == 1 || cnt == len(word) {
+		return true
+	}
+	return false
 }
 
 /*
