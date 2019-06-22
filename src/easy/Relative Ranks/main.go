@@ -1,47 +1,39 @@
 package main
 
 import (
-	"math"
+	"sort"
+	"strconv"
 )
 
 func main() {
 
 }
 
-func findRadius(houses []int, heaters []int) int {
+func findRelativeRanks(nums []int) []string {
 
-	res := 0
-	for _, house := range houses {
-		distance := math.MaxInt64
-		for _, heater := range heaters {
-			distance = Min(distance, Abs(house-heater))
+	cop := append([]int{}, nums...)
+	memo := make(map[int]string)
+	sort.Sort(sort.IntSlice(cop))
+	cnt := 1
+	for index := len(cop) - 1; index >= 0; index-- {
+		switch cnt {
+		case 1:
+			memo[cop[index]] = "Gold Medal"
+		case 2:
+			memo[cop[index]] = "Silver Medal"
+		case 3:
+			memo[cop[index]] = "Bronze Medal"
+		default:
+			memo[cop[index]] = strconv.Itoa(cnt)
 		}
-		res = Max(res, distance)
+		cnt++
+	}
+
+	res := make([]string, 0)
+	for _, val := range nums {
+		res = append(res, memo[val])
 	}
 	return res
-}
-
-func Min(a, b int) int {
-	if a > b {
-		return b
-	} else {
-		return a
-	}
-}
-func Max(a, b int) int {
-	if a > b {
-		return a
-	} else {
-		return b
-	}
-}
-
-func Abs(a int) int {
-	if a > 0 {
-		return a
-	} else {
-		return -a
-	}
 }
 
 /*
