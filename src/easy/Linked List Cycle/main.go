@@ -22,6 +22,23 @@ func hasCycleOther(head *ListNode) bool {
 }
 
 func hasCycle(head *ListNode) bool {
+
+	if head == nil {
+		return false
+	}
+	memo := make(map[*ListNode]int)
+	for head != nil {
+		if _, ok := memo[head]; !ok {
+			memo[head]++
+		} else {
+			return true
+		}
+		head = head.Next
+	}
+	return false
+}
+
+func hasCycleOld(head *ListNode) bool {
 	var wk = make(map[*ListNode]int)
 	for head != nil {
 		var _, ok = wk[head]

@@ -4,34 +4,46 @@ func main() {
 
 }
 
-func deleteDuplicates(head *ListNode) *ListNode {
+func numIslands(grid [][]byte) int {
 
-	var res *ListNode
-	res = head
-	for head != nil && head.Next != nil {
-
-		if head.Val == head.Next.Val {
-			head.Next = head.Next.Next
-		} else {
-			head = head.Next
+	visited := make([][]bool, 0)
+	for _, val := range grid {
+		tmp := make([]bool, len(val))
+		visited = append(visited, tmp)
+	}
+	res := 0
+	for oI := 0; oI < len(grid); oI++ {
+		for iI := 0; iI < len(grid[oI]); iI++ {
+			if !visited[oI][iI] && grid[oI][iI] != '0' {
+				visited[oI][iI] = true
+				recursive(grid, visited, oI, iI)
+				res++
+			}
 		}
 	}
-
 	return res
 }
 
-func deleteDuplicatesOld(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return head
+func recursive(grid [][]byte, visited [][]bool, oI int, iI int) {
+	d := []int{0, 1, 0, -1}
+	for dI := 0; dI < len(d); dI++ {
+		wkY := d[dI^1] + oI
+		wkX := d[dI] + iI
+		if wkX < 0 || wkX >= len(grid[0]) || wkY < 0 || wkY >= len(grid) || visited[wkY][wkX] || grid[wkY][wkX] == '0' {
+			continue
+		}
+		visited[wkY][wkX] = true
+		recursive(grid, visited, wkY, wkX)
 	}
-	if head.Val == head.Next.Val {
-		head.Next = head.Next.Next
-		deleteDuplicates(head)
-	} else {
-		deleteDuplicates(head.Next)
-	}
+}
 
-	return head
+/*
+TreeNode
+*/
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }
 
 /*

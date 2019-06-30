@@ -4,34 +4,52 @@ func main() {
 
 }
 
-func deleteDuplicates(head *ListNode) *ListNode {
+/*
+TreeNode
+*/
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
 
-	var res *ListNode
-	res = head
-	for head != nil && head.Next != nil {
+func Max(a, b int) int {
+	if a > b {
+		return a
+	} else {
+		return b
+	}
+}
 
-		if head.Val == head.Next.Val {
-			head.Next = head.Next.Next
-		} else {
-			head = head.Next
+func maxAreaOfIsland(grid [][]int) int {
+	res := 0
+	for oI, oV := range grid {
+		for iI, iV := range oV {
+			if iV == 1 {
+				cnt := countArea(grid, oI, iI)
+				res = Max(res, cnt)
+			}
 		}
 	}
-
 	return res
 }
 
-func deleteDuplicatesOld(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return head
-	}
-	if head.Val == head.Next.Val {
-		head.Next = head.Next.Next
-		deleteDuplicates(head)
-	} else {
-		deleteDuplicates(head.Next)
-	}
+func countArea(grid [][]int, y int, x int) int {
 
-	return head
+	d := []int{0, 1, 0, -1}
+	res := 0
+	grid[y][x] = 2
+	res++
+	for index := 0; index < len(d); index++ {
+		wkY := d[index] + y
+		wkX := d[index^1] + x
+		if wkY < 0 || wkY >= len(grid) || wkX < 0 || wkX >= len(grid[0]) || grid[wkY][wkX] != 1 {
+			continue
+		}
+		grid[wkY][wkX] = 2
+		res += countArea(grid, wkY, wkX)
+	}
+	return res
 }
 
 /*
